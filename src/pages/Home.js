@@ -4,9 +4,10 @@ import Row from '../components/Row';
 import Col from '../components/Col';
 import Card from '../components/Card';
 import Div from '../components/Div'
+import {withFirebase} from '../components/Firebase/index'
 import { searchTmdb, saveMovie, recMovies, removeMovie, getSavedMovies } from '../utils/API';
 
-class Home extends Component {
+class HomeBase extends Component {
   state = {
     searchTerm: '',
     movieData: {},
@@ -96,6 +97,7 @@ class Home extends Component {
 
   render() {
     console.log(this.state)
+    console.log(this.props)
     return (
       <React.Fragment>
         <Jumbotron />
@@ -161,5 +163,7 @@ class Home extends Component {
     );
   }
 }
+
+const Home = withFirebase(HomeBase)
 
 export default Home;
