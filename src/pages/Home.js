@@ -13,8 +13,15 @@ class HomeBase extends Component {
     movieData: {},
     savedMovieIds: [],
     movieId: "",
-    movieRec: []
+    movieRec: [],
+    currentChat: []
   };
+
+  // componentDidMount() {
+  //   this.props.firebase.chat().on('value', snapshot => {
+  //     this.setState({currentChat: Object.values(snapshot.val())})
+  //   }) 
+  // }
 
 
   reRun = (title) => {
