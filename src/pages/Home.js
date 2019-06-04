@@ -4,14 +4,25 @@ import Row from '../components/Row';
 import Col from '../components/Col';
 import Card from '../components/Card';
 import Div from '../components/Div'
-import { searchOmdb, saveMovie, removeMovie, getSavedMovies } from '../utils/API';
+import { searchTmdb, saveMovie, recMovies, removeMovie, getSavedMovies } from '../utils/API';
 
 class Home extends Component {
   state = {
     searchTerm: '',
     movieData: {},
-    savedMovieIds: []
+    savedMovieIds: [],
+    movieId: "",
+    movieRec: []
   };
+
+
+  reRun = (title) => {
+    this.setState({
+      searchTerm: title
+    }, this.mainSearch)
+  }
+
+
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -22,21 +33,48 @@ class Home extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+    this.mainSearch();
+  }
 
-    searchOmdb(this.state.searchTerm)
+
+  mainSearch = () => {
+    searchTmdb(this.state.searchTerm)
       .then(({ data: movieData }) => {
         console.log(movieData);
         this.setState({
           movieData: {
-            title: movieData.Title,
-            actors: movieData.Actors,
-            plot: movieData.Plot,
-            image: movieData.Poster
+            title: movieData.results[0].title,
+            movieId: movieData.results[0].id,
+            plot: movieData.results[0].overview,
+            image: movieData.results[0].poster_path,
+            vote: movieData.results[0].vote_average
           }
+        }, this.recSearch);
+      })
+      .catch(err => console.log(err));
+      this.setState({searchTerm: ""})
+  };
+
+  recSearch = () => {
+    console.log(this.state.movieData.movieId);
+    recMovies(this.state.movieData.movieId)
+      .then(({ data: movieRec }) => {
+        console.log(movieRec);
+        this.setState({movieRec: movieRec.results
+          // movieRec: {
+          //   title: movieRec.results.title,
+          //   movieId: movieRec.results.id,
+          //   plot: movieRec.results.overview,
+          //   image: movieRec.results.poster_path,
+          //   vote: movieRec.results.vote_average
+          // }
         })
       })
       .catch(err => console.log(err));
   };
+
+
+
 
   handleSaveMovies = (movieId) => {
     const movie = this.state.movieList.find(movie => movie.movieId === movieId);
@@ -57,6 +95,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <React.Fragment>
         <Jumbotron />
@@ -70,7 +109,7 @@ class Home extends Component {
                     value={this.state.searchTerm}
                     name="searchTerm"
                   />
-                  <button type="submit" className="btn">Search For Movies</button>
+                  <button type="submit" className="btn btn-outline-info">Search For Movies</button>
                 </form>
               </Card>
             </Col>
@@ -79,7 +118,7 @@ class Home extends Component {
                 <Col className="text-center" md={6}>
                 {
                   !Object.keys(this.state.movieData).length ? "Search For A Movie To Begin" : (
-                          <Card className="text-center" title={this.state.movieData.title} image={this.state.movieData.image}>
+                          <Card className="text-center" title={this.state.movieData.title} image={this.state.movieData.image} vote={this.state.movieData.vote} movieId={this.state.movieData.movieId}>
                             <p>
                               {this.state.movieData.plot}
                             </p>
@@ -94,7 +133,25 @@ class Home extends Component {
                 }
                 </Col>
                 <Col md={6}>
-                  <Div/>
+                  <Div>
+                    {
+                      this.state.movieRec.map(movie => (
+                        <Card secondSearch reRun={this.reRun} key={movie.id} className="text-center" title={movie.title} image={movie.poster_path} vote={movie.vote_average} id={movie.id}>
+                            {/* <p>
+                              {movie.overview}
+                            </p> */}
+                            {/* <button 
+                              disabled={this.state.savedMovieIds.includes(movie.movieId) ? true : undefined}
+                              onClick={() => this.handleSaveMovie(movie.movieId)}
+                              className="btn btn-success btn-sm">
+                              Save Movie
+                            </button> */}
+                          </Card>
+                      ))
+                    }
+                  
+                  </Div>
+
                 </Col>
               </Row>
             </Col>

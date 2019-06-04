@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+
+const pageArray = [1,2,3];
+const pageArrayRandom = Math.floor(Math.random() * pageArray.length) + 1;
+console.log(pageArrayRandom)
+
+
 export const saveMovie = movieData => {
     return axios.post('/api/movies', 
     movieData);
@@ -16,12 +22,26 @@ export const removeMovie = movieId => {
 };
 
 
-export const searchOmdb = query =>
+export const recMovies = movieId =>
 {
-    return axios.get(`https://www.omdbapi.com`, {
+    console.log(movieId);
+    return axios.get(`https://api.themoviedb.org/3/movie/${movieId}/similar`, {
         params: {
-            t: query,
-            apikey: "9542a52"
+            movieId: movieId,
+            api_key: "7bc99c9ee75ec56de6b188d9007199dc",
+            language: "en-US",
+            page: pageArrayRandom
+        }
+    })
+}
+
+
+export const searchTmdb = query =>
+{
+    return axios.get(`https://api.themoviedb.org/3/search/movie?api_key=&language=en-US&query=&page=1`, {
+        params: {
+            query: query,
+            api_key: "7bc99c9ee75ec56de6b188d9007199dc"
         }
     });
 };
@@ -30,5 +50,6 @@ export default {
     saveMovie,
     getSavedMovies,
     removeMovie,
-    searchOmdb
+    searchTmdb,
+    recMovies
 }
