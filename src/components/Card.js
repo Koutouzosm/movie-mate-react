@@ -1,11 +1,13 @@
 import React from 'react';
 
 const Card = props => {
+  console.log(props);
   return (
-    <div className='card'>
+    <div className='card text-center animated flipInX'>
       {props.title ? (
         <h3 className='card-header'>{props.title}</h3>
       ) : ""}
+      
       {props.image ? (
         <img src={props.image} alt={props.title} className='card-img' />
       ) : ""}
