@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import Navigation from '../components/Navigation';
-=======
-import Navbar from '../components/Navbar';
->>>>>>> firebase
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Card from '../components/Card';
