@@ -10,7 +10,7 @@ function Navbar(props) {
   </button>
 
   <div className="collapse navbar-collapse" id="navbarColor01">
-    <ul className="navbar-nav ml-auto">
+    <ul className="navbar-nav mr-auto">
       <li className="nav-item">
         <NavLink className="nav-link" to="/">Home</NavLink>
       </li>

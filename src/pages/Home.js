@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import Navigation from '../components/Navigation';
+=======
+import Navbar from '../components/Navbar';
+>>>>>>> firebase
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Card from '../components/Card';
 import Div from '../components/Div'
+import {withFirebase} from '../components/Firebase/index'
 import { searchTmdb, saveMovie, recMovies, removeMovie, getSavedMovies } from '../utils/API';
 
-class Home extends Component {
+class HomeBase extends Component {
   state = {
     searchTerm: '',
     movieData: {},
     savedMovieIds: [],
     movieId: "",
-    movieRec: []
+    movieRec: [],
+    currentChat: []
   };
+
+  // componentDidMount() {
+  //   this.props.firebase.chat().on('value', snapshot => {
+  //     this.setState({currentChat: Object.values(snapshot.val())})
+  //   }) 
+  // }
 
 
  
@@ -38,7 +50,7 @@ class Home extends Component {
     this.mainSearch();
   }
 
-
+  // Main function to search for a movie
   mainSearch = () => {
     searchTmdb(this.state.searchTerm)
       .then(({ data: movieData }) => {
@@ -57,6 +69,7 @@ class Home extends Component {
       this.setState({searchTerm: ""})
   };
 
+  
   recSearch = () => {
     console.log(this.state.movieData.movieId);
     recMovies(this.state.movieData.movieId)
@@ -98,6 +111,7 @@ class Home extends Component {
 
   render() {
     console.log(this.state)
+    console.log(this.props)
     return (
       <React.Fragment>
         <Navigation 
@@ -155,5 +169,7 @@ class Home extends Component {
     );
   }
 }
+
+const Home = withFirebase(HomeBase)
 
 export default Home;
