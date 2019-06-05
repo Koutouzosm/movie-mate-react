@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../components/Navbar';
+import Navigation from '../components/Navigation';
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Card from '../components/Card';
@@ -15,6 +15,8 @@ class Home extends Component {
     movieRec: []
   };
 
+
+ 
 
   reRun = (title) => {
     this.setState({
@@ -98,24 +100,16 @@ class Home extends Component {
     console.log(this.state)
     return (
       <React.Fragment>
-        <Navbar />
+        <Navigation 
+        search
+        handleInputChange={this.handleInputChange}
+        searchTerm={this.state.searchTerm}
+        mainSearch={this.mainSearch}
+        />
         <div className="container-fluid">
-          <Row>
-            <Col xs={12} md={4}>
-              <Card title="Search for a Movie">
-                <form onSubmit={this.handleFormSubmit}>
-                  <input type="text" className="form-control" placeholder="Search for a Movie"
-                    onChange={this.handleInputChange}
-                    value={this.state.searchTerm}
-                    name="searchTerm"
-                  />
-                  <button type="submit" className="btn btn-outline-info">Search For Movies</button>
-                </form>
-              </Card>
-            </Col>
-            <Col xs={12} md={8}>
+
               <Row>
-                <Col className="text-center" md={6}>
+                <Col className="text-center" md={4}>
                 {
                   !Object.keys(this.state.movieData).length ? "Search For A Movie To Begin" : (
                           <Card className="text-center" title={this.state.movieData.title} image={this.state.movieData.image} vote={this.state.movieData.vote} movieId={this.state.movieData.movieId}>
@@ -132,10 +126,12 @@ class Home extends Component {
                   )
                 }
                 </Col>
-                <Col md={6}>
+                <Col md={8}>
                   <Div>
+                  <Row>
                     {
                       this.state.movieRec.map(movie => (
+                        <Col md={3}> 
                         <Card secondSearch reRun={this.reRun} key={movie.id} className="text-center" title={movie.title} image={movie.poster_path} vote={movie.vote_average} id={movie.id}>
                             {/* <p>
                               {movie.overview}
@@ -147,15 +143,13 @@ class Home extends Component {
                               Save Movie
                             </button> */}
                           </Card>
+                          </Col>
                       ))
                     }
-                  
+                    </Row>
                   </Div>
-
                 </Col>
               </Row>
-            </Col>
-          </Row>
         </div>
       </React.Fragment>
     );
