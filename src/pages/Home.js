@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Jumbotron from '../components/Jumbotron';
+import Navbar from '../components/Navbar';
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Card from '../components/Card';
@@ -98,7 +98,7 @@ class Home extends Component {
     console.log(this.state)
     return (
       <React.Fragment>
-        <Jumbotron />
+        <Navbar />
         <div className="container-fluid">
           <Row>
             <Col xs={12} md={4}>
