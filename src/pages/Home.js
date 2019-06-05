@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Jumbotron from '../components/Jumbotron';
+import Navbar from '../components/Navbar';
 import Row from '../components/Row';
 import Col from '../components/Col';
 import Card from '../components/Card';
@@ -44,7 +44,7 @@ class HomeBase extends Component {
     this.mainSearch();
   }
 
-
+  // Main function to search for a movie
   mainSearch = () => {
     searchTmdb(this.state.searchTerm)
       .then(({ data: movieData }) => {
@@ -63,6 +63,7 @@ class HomeBase extends Component {
       this.setState({searchTerm: ""})
   };
 
+  
   recSearch = () => {
     console.log(this.state.movieData.movieId);
     recMovies(this.state.movieData.movieId)
@@ -107,7 +108,7 @@ class HomeBase extends Component {
     console.log(this.props)
     return (
       <React.Fragment>
-        <Jumbotron />
+        <Navbar />
         <div className="container-fluid">
           <Row>
             <Col xs={12} md={4}>

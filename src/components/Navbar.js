@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-function Jumbotron(props) {
+function Navbar(props) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
   <NavLink className="navbar-brand" to="/">Movie-Mate</NavLink>
@@ -10,7 +10,7 @@ function Jumbotron(props) {
   </button>
 
   <div className="collapse navbar-collapse" id="navbarColor01">
-    <ul className="navbar-nav ml-auto">
+    <ul className="navbar-nav mr-auto">
       <li className="nav-item">
         <NavLink className="nav-link" to="/">Home</NavLink>
       </li>
@@ -24,13 +24,16 @@ function Jumbotron(props) {
         <NavLink className="nav-link" to="/logout">Logout</NavLink>
       </li>
     </ul>
-
+    <form className="form-inline my-2 my-lg-0">
+      <input className="form-control mr-sm-2" type="text" placeholder="Search for a movie!"/>
+      <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </div>
 </nav>
   );
 }
 
-export default Jumbotron;
+export default Navbar;
 
 
 {/* <div
